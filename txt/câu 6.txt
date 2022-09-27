@@ -1,0 +1,58 @@
+Class Train represents to a train, described as the following:
+class Train {
+    public:
+        class TrainCar;
+    private:
+        TrainCar* head;
+        TrainCar* tail;
+        int size;
+    public:
+        class TrainCar {
+            private:
+                int remainingSpace;
+                TrainCar* next;
+                friend class Train;
+            public:
+                TrainCar() {this->next = NULL;}
+                TrainCar(int remainingSpace, TrainCar* next = NULL) {
+                    this->remainingSpace = remainingSpace;
+                    this->next = next;
+                }
+        };
+        Train() {
+            this->head = new TrainCar(0);
+            this->tail = this->head;
+            this->size = 1;
+        }
+        int allocate(int containerSize);
+        int totalRemainingSpace();
+};
+In this class:
+- head is head of train (cannot contain container, index=0).
+
+- tail is the last traincar of the train.
+
+- size is the number of traincars the train has (include the head of train).
+
+Each traincar (except head of train) can contains an amount of mass. Each traincar includes remainingSpace representing its current ability of containing and next presenting the next traincar (the head of train is the first traincar). 
+Load the containers into the traincars of the train following these rules:
+- Each container can be loaded into only one traincar.
+- With a container with mass M, we must load it into the traincar having current ability of containing >= M and it is the smallest (if more than one traincar satisfying, choose the  traincar with the smallest index). After that, we must update its current ability of containing.
+Request: Implement functions 
+int Train::allocate(int containerSize); int Train::totalRemainingSpace();
+where:
+- Function allocate implements for loading the container with mass containerSize into the train. Return the result is the index of the traincar used for loading this container  (if can) and return -1 (if cannot load).
+- Function totalRemainingSpace implements for calculating the sum of the mass the train can contains. Return the result is the sum of the mass the train can contains currently.
+Example:
+- N(M) represents that the traincar with index N can contain mass of M.
+- Train:
+0(0)->1(200)->2(400)->3(300)->4(600)->5(500)->6(100)
+- Implement allocate(390): the result is 2, update train:
+0(0)->1(200)->2(10)->3(300)->4(600)->5(500)->6(100)
+- Implement allocate(590): the result is 4, update train:
+0(0)->1(200)->2(10)->3(300)->4(10)->5(500)->6(100)
+- Implement totalRemainingSpace(): the result is 1120.
+- Implement allocate(510): the result is -1.
+- Implement allocate(10): the result is 2, update train:
+0(0)->1(200)->2(0)->3(300)->4(10)->5(500)->6(100)
+Note: In this exercise, libraries iostream and using namespace std; have been used. You can add other functions for your answer, but you are not allowed to add other libraries.

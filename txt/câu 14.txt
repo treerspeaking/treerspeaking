@@ -1,0 +1,42 @@
+- Class LinkedList is used to represent single linked list, described as the following:
+
+class LinkedList {
+    public: 
+        class Node;
+    private:
+        Node* head;
+        Node* tail;
+        int size;
+    public: 
+        class Node {
+            private: 
+                int value;
+                Node* next;
+                friend class LinkedList;
+            public:
+                Node() {
+                    this->next = NULL;
+                }
+                Node(Node* node) {
+                    this->value = node->value;
+                    this->next = node->next;
+                }
+                Node(int value, Node* next = NULL) {
+                    this->value = value;
+                    this->next = next;
+                }
+        };
+        LinkedList(): head(NULL), tail(NULL), size(0) {};
+	void replace(LinkedList* linked_list, int low, int high);
+};
+- In this class; head, tail and size are the pointers of the first element, the last element and size of linked list.
+- Request: Implement function 'replace(LinkedList* linked_list, int low, int high)'  (low <= high and high >= 0) to delete all elements from position low to position high in the linked list (head's position is 0). After that, add linked_list to this linked list in the position after position (low - 1) (if low - 1 < 0, the head of this linked list will become the head of linked_list. 
+(If high >= size, delete all elements from low position to the last position of this linked list. If low < 0, delete all elements from the first position of this linked list to high position) 
+- Example:
++ The given linked list: 10->20->30->40->50
++ The linked_list: 55->45->42
++ low=1, high=3
+In this case, delete all elements from position 1 (value 20) to position 3 (value 40). After that, add linked_list to this linked list to the position after position 0 (value 10), therefore, this linked list will become: 10->55->45->42->50 .
+Note: In this exercise, library 'iostream' and 'sstream' and 'using namespace std;' has been used. You can add other functions, however, you are not allowed to add other libraries.
+For example:
+

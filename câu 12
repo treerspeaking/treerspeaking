@@ -1,0 +1,16 @@
+LLNode* reverseLinkedList(LLNode* head) {
+    // STUDENT ANSWER
+    if(head==nullptr) return nullptr;
+    LLNode*prev=nullptr;
+    LLNode*current=head;
+    LLNode*next=nullptr;
+    while(current!=nullptr){
+        next=current->next;
+        current->next=prev;
+        prev=current;
+        current=next;
+    }
+    head=prev;
+    return head;
+    
+}

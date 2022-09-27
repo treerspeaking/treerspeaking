@@ -1,0 +1,40 @@
+void LinkedList::replace(LinkedList* linked_list, int low, int high) {
+    Node* temp = head;
+    Node* hold = nullptr;
+    if (low < 0) {
+        low = 0;
+    }
+    if (high >= size) {
+        high = size-1;
+    }
+    for (int i = 0; i < low; i++) {
+        if (i == (low - 1)) { hold = temp; }// giữ lại để lát nối với chuỗi
+        temp = temp->next;
+    }
+    Node* delete_node = temp;//delete các node 
+    //cout << high << endl;
+    for (int i = low; i <= high; i++) {
+        //cout << i << endl;
+        temp = temp->next;//dời note trc khi xóa
+        delete delete_node;
+        delete_node = temp;
+    }
+    if (linked_list != nullptr&&linked_list->head!=nullptr) {
+        if (hold != nullptr)hold->next = linked_list->head;//nối chuỗi 
+        else head = linked_list->head;//nếu ko có hold tức là xóa từ head trở đi nên ta sẽ cho head=linked_list->head
+        linked_list->tail->next = temp;//nối phần đuôi linked_list với phần còn lại node
+        if(linked_list->tail->next==nullptr){
+            tail=linked_list->tail;//update cái tail
+        }
+        else{
+            while(temp->next!=nullptr){
+                temp=temp->next;
+            }
+            tail=temp;//update cái tail
+        }
+    }
+    else {//nếu linked_list là nullptr hoặc linked_head là nullptr thì chạy phần này 
+        if (hold != nullptr) hold->next = temp;
+        else head = temp;
+    }
+}

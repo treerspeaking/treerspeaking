@@ -1,0 +1,53 @@
+LLNode* rotateLinkedList(LLNode* head, int k) {
+    // STUDENT ANSWER
+    if(head==nullptr){
+        return nullptr;
+    }
+    if(head->next==nullptr){
+        LLNode* ret=new LLNode(head->val,nullptr);
+        return ret;
+    }
+    int length=0;
+    LLNode*temp=head;
+    while(temp!=nullptr){
+        temp=temp->next;
+        length++;
+    }
+    temp=head;
+    k=k%length;
+    LLNode*tail_part=nullptr,*temp_tail=nullptr;
+    for(int i=0;i<length-k;i++){
+        if(i==0){
+            tail_part=new LLNode(temp->val,temp->next);
+            temp_tail=tail_part;
+        }
+        else{
+        temp_tail->next=new LLNode(temp->val,nullptr);
+        temp_tail=temp_tail->next;
+        }
+        temp=temp->next;
+    }
+    LLNode*head_part,*temp_head;
+    head_part=new LLNode(temp->val,nullptr);
+    temp_head=head_part;
+    temp=temp->next;
+    //int cnt=0;
+    while(temp!=nullptr){
+       temp_head->next=new LLNode(temp->val,nullptr);
+       //temp_head->next->val=temp_head->val=temp->val;
+       temp=temp->next;
+       //if(temp!=nullptr) 
+       temp_head=temp_head->next;
+       //cnt++;
+    }
+    temp_head->next=tail_part;
+    //cout<<"temp_headptr"<<temp_head<<endl;
+    //cout<<"temp_headval="<<temp_head->val<<endl;
+    //LLNode*read=head_part;
+    //while(read!=nullptr){
+    //    cout<<read->val<<endl;
+    //    cout<<read<<endl;
+    ///    read=read->next;
+    //}
+    return head_part;
+}

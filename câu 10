@@ -1,0 +1,46 @@
+LLNode* foldLinkedList(LLNode* head) {
+    // STUDENT ANSWER
+    if(head==nullptr) return nullptr;
+    LLNode* temp=head;
+    int length=0;
+    while(temp!=nullptr){
+        length++;
+        temp=temp->next;
+    }
+    temp=head;
+    int *arr=new int[length];
+    for(int i=0;temp!=nullptr;i++){
+        arr[i]=temp->val;
+        temp=temp->next;
+    }
+    int firsthalf,secondhalf;
+    if(length%2==0){
+        firsthalf=length/2-1;
+        secondhalf=length/2;
+    }
+    else{
+        firsthalf=length/2-1;
+        secondhalf=length/2+1;
+    }
+    LLNode*ret_head=new LLNode();
+    temp=ret_head;
+    while(firsthalf>=0){
+        temp->val=arr[firsthalf]+arr[secondhalf];
+        if(firsthalf!=0){
+            temp->next = new LLNode();
+            temp=temp->next;
+        }
+        firsthalf--;
+        secondhalf++;
+    }
+    if(length%2==0){
+    }
+    else{
+        temp= new LLNode();
+        temp->next=ret_head;
+        temp->val=arr[length/2];
+        ret_head=temp;
+        
+    }
+    return ret_head;
+}

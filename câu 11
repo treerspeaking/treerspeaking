@@ -1,0 +1,21 @@
+LLNode* replaceFirstGreater(LLNode* head) {
+    // STUDENT ANSWER
+    LLNode* temp1=head,*temp2;
+    while(temp1!=nullptr){
+        bool changed=0;
+        temp2=temp1->next;
+        while(temp2!=nullptr){
+            if(temp1->val<temp2->val){
+                temp1->val=temp2->val;
+                changed=1;
+                break;
+            }
+            temp2=temp2->next;
+        }
+        if(!changed){
+            temp1->val=0;
+        }
+        temp1=temp1->next;
+    }
+    return head;
+}

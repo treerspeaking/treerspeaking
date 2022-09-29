@@ -1,0 +1,115 @@
+template <class T>
+T SLinkedList<T>::removeAt(int index)
+{
+    /* Remove element at index and return removed value */
+    
+    T result;
+    Node *fhead = head;
+    
+    if (index == 0)
+    {
+        result = head->data;
+        Node *tmp = head->next;
+        Node *k = head; 
+        head = tmp;
+        delete k;
+    }
+    else if ((index < count - 1) && (index > 0))
+    {
+        for (int i = 1; i < index; i++)
+            fhead = fhead->next;  
+        result = fhead->next->data;
+        Node *tmp = fhead->next;
+        fhead->next = fhead->next->next;
+        
+        delete tmp;
+        
+    } else if (index == (count - 1))
+    {
+        result = tail->data;
+        
+        for (int i = 1; i < count - 1; i++)
+            fhead = fhead->next;
+        
+        Node *tmp = tail;
+        fhead->next = nullptr;
+        
+        delete tmp;
+        tail = fhead;
+    }
+    count--;
+    return result;
+}
+
+template <class T>
+bool SLinkedList<T>::removeItem(const T& item)
+{
+    /* Remove the first apperance of item in list and return true, otherwise return false */
+    Node* fhead = head;
+    int index = 0;
+    bool isFound = false;
+    
+    while(fhead)
+    {
+        if (fhead->data == item)
+        {
+            isFound = true;
+            break;
+        }
+        index++;
+        fhead = fhead->next;
+    }
+    
+    if (!isFound) return false;
+    
+    fhead = head;
+    
+    if (index == 0)
+    {
+        Node *tmp = head->next;
+        Node *k = head; 
+        head = tmp;
+        delete k;
+    }
+    else if ((index < count - 1) && (index > 0))
+    {
+        for (int i = 1; i < index; i++)
+            fhead = fhead->next;  
+            
+        Node *tmp = fhead->next;
+        fhead->next = fhead->next->next;
+        
+        delete tmp;
+    } else if (index == (count - 1))
+    {
+        for (int i = 1; i < count - 1; i++)
+            fhead = fhead->next;
+        
+        Node *tmp = tail;
+        fhead->next = nullptr;
+        
+        delete tmp;
+        tail = fhead;
+    }
+    
+    count --;
+    return true;
+       
+}
+
+template<class T>
+void SLinkedList<T>::clear(){
+    /* Remove all elements in list */
+    
+    Node* current = head;
+    
+    while (current != nullptr)
+    {
+        Node* next = current->next;
+        delete current;
+        current = next;
+   }
+   head = nullptr;
+   tail = nullptr;
+   count = 0;
+}

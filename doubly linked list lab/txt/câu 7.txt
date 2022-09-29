@@ -1,0 +1,47 @@
+Assume that you build a toy called  line-street. You have to impletement 
+some functions followed by some rules:
+void LineStreet(string homepage): make a root for a line
+void addNewElement(string ele): add new element in line, and clear up 
+all forward elements
+void back(int steps): you have to back to element behind with steps. 
+If you can only back to n while n < steps. You should back to n steps.
+void forward(int steps): you have to forward to element behind with steps. 
+If you can only forward to n while n < steps. You should 
+forward n steps.
+Simple Example:
+LineStreet* line = new LineStreet("home");
+line->addNewElement("Bob");
+line->addNewElement("Smith");
+line->addNewElement("Ann");
+line->back(1);                                 -->   return "Smith"
+line->back(1);                                 -->   return "Bob"
+line->forward(1);                              -->   return "Smith"
+line->addNewElement("Peter");
+line->forward(2);                              -->   return "Peter"
+line->back(1);                                 -->   return "Smith"
+Constraints: 1 <= steps <= 100
+1<= len(homepage), len(ele) <= 20
+
+Note: In this exercise, libraries iostream, string and using namespace std; 
+have been used. You can add other 
+functions for your answer, but you are not allowed to add other libraries.
+
+For example:
+
+Test	Result
+LineStreet* obj = new LineStreet("home");
+obj->addNewElement("Bob");
+obj->addNewElement("Smith");
+obj->addNewElement("Ann");
+cout << obj->back(1) << endl;
+cout << obj->back(1) << endl;
+cout << obj->forward(1) << endl;
+obj->addNewElement("Peter");
+cout << obj->forward(2) << endl;
+cout << obj->back(1) << endl;
+Smith
+Bob
+Smith
+Peter 
+Smith
+Answer:(penalty regime: 10, 20, ... %)

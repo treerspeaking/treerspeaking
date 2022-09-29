@@ -1,0 +1,83 @@
+Implement Iterator class in class DLinkedList. 
+
+Note: Iterator is a concept of repetitive elements on sequence structures. Iterator is implemented in class vector, list in STL container in C++ (https://www.geeksforgeeks.org/iterators-c-stl/). Your task is to implement the simple same class with iterator in C++ STL container.
+
+
+template <class T>
+class DLinkedList
+{
+public:
+    class Iterator; //forward declaration
+    class Node;     //forward declaration
+protected:
+    Node *head;
+    Node *tail;
+    int count;
+public:
+    DLinkedList() : head(NULL), tail(NULL), count(0){};
+    ~DLinkedList();
+    void add(const T &e);
+    void add(int index, const T &e);
+    T removeAt(int index);
+    bool removeItem(const T &item);
+    bool empty();
+    int size();
+    void clear();
+    T get(int index);
+    void set(int index, const T &e);
+    int indexOf(const T &item);
+    bool contains(const T &item);
+    string toString();
+    Iterator begin()
+    {
+        return Iterator(this, true);
+    }
+    Iterator end()
+    {
+        return Iterator(this, false);
+    }
+public:
+    class Node
+    {
+    private:
+        T data;
+        Node *next;
+        friend class DLinkedList<T>;
+    public:
+        Node()
+        {
+            next = 0;
+        }
+        Node(Node *next)
+        {
+            this->next = next;
+        }
+        Node(T data, Node *next = NULL)
+        {
+            this->data = data;
+            this->next = next;
+        }
+    };
+    class Iterator
+    {
+    private:
+        DLinkedList<T> *pList;
+        Node *current;
+        int index; // is the index of current in pList
+    public:
+        Iterator(DLinkedList<T> *pList, bool begin);
+        Iterator &operator=(const Iterator &iterator);
+        void set(const T &e);
+        T &operator*();
+        bool operator!=(const Iterator &iterator);
+        void remove();
+        
+        // Prefix ++ overload
+        Iterator &operator++();
+        
+        // Postfix ++ overload
+        Iterator operator++(int);
+    };
+};
+Please read example carefully to see how we use the iterator.
+For example:

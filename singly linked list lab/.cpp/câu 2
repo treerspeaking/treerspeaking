@@ -1,0 +1,43 @@
+void Polynomial::insertTerm(const Term& term) {
+    // STUDENT ANSWER
+    insertTerm (term.coeff, term.exp);
+}
+
+void Polynomial::insertTerm(double coeff, int exp) {
+    // STUDENT ANSWER
+    Term* term = new Term(coeff,exp);
+    int index=0;
+    if(terms->empty() && (*term).coeff!=0){
+        terms->add(*term);
+    }
+    else if((*term).coeff == 0){}
+    else
+    {
+        SLinkedList<Term>::Iterator it;
+        int check =0;
+        for(it= this->terms->begin(); it != this->terms->end(); it++){
+            if((*it).exp == (*term).exp){
+                check =1;
+                break;
+            }else if((*it).exp < (*term).exp) {
+                check =2;
+                break;
+            }else{
+                index++;
+            }
+        }
+        if(check ==1){
+            if((*it).coeff + (*term).coeff == 0){
+                terms->removeItem(*it);
+            } else{
+                (*it).coeff += (*term).coeff;
+            }
+        } else if(check == 2){
+            terms->add(index, (*term));
+        } else if ((*term).exp >=0){
+            terms->add((*term));
+        } else{
+            return;
+        } 
+    }
+}

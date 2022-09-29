@@ -1,0 +1,100 @@
+Deque::Deque() {
+    head = nullptr;
+    tail = nullptr;
+    curSize = 0;
+}
+
+Deque::~Deque() {
+}
+
+void Deque::clear() {
+    while(head != nullptr){
+        popBack();
+    }
+}
+
+int Deque::getSize() {
+    return curSize;
+}
+
+void Deque::pushFront(int i) {
+    if (head == nullptr){
+        Node* newNode = new Node(i,nullptr,nullptr);
+        head = newNode;
+        tail = newNode;
+    } else {
+        Node* newNode = new Node(i,nullptr,head);
+        head->left = newNode;
+        head = newNode;
+    }
+    curSize += 1;
+}
+
+void Deque::pushBack(int i) {
+    if (head == nullptr){
+        Node* newNode = new Node(i,nullptr,nullptr);
+        head = newNode;
+        tail = newNode;
+    } else {
+        Node* newNode = new Node(i,tail,nullptr);
+        tail->right = newNode;
+        tail = newNode;
+    }
+    curSize += 1;
+}
+
+int Deque::popFront() {
+    if (head == nullptr)
+        return -1;
+
+    int ans = head->value;
+    Node* newHead = head->right;
+    if (newHead != nullptr){
+        newHead->left = nullptr;
+        delete head;
+        head = newHead;       
+    } else {
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+    }
+    curSize -= 1;
+    return ans; 
+}
+
+int Deque::popBack() {
+    if (head == nullptr)
+        return -1;
+
+    int ans = tail->value;
+    Node* newTail = tail->left;
+    if (newTail != nullptr){
+        newTail->right = nullptr;
+        delete tail;
+        tail = newTail;       
+    } else {
+        delete tail;
+        head = nullptr;
+        tail = nullptr;
+    }
+    curSize -= 1;
+    return ans;
+}
+
+void Deque::printDequeReverse() {
+   Node*temp=tail;
+   while(temp!=nullptr){
+        cout<<temp->value<<" ";
+       temp=temp->left;
+   }
+   cout<<endl;
+}
+
+void Deque::printDeque() {
+    Node*temp=head;
+    while(temp!=nullptr){
+        cout<<temp->value<<" ";
+        temp=temp->right;
+    }
+    cout<<endl;
+}

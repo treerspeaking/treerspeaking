@@ -1,0 +1,164 @@
+template <class T>
+SLinkedList<T>::Iterator::Iterator(SLinkedList<T>* pList, bool begin)
+{
+    this->pList = pList;
+    if (begin == true)
+    {
+        if (this->pList != nullptr)
+        {
+            this->current = pList->head;
+            this->index = 0;
+        }
+        else
+        {
+            this->current = nullptr;
+            this->index = -1;
+        }
+    }
+    else
+    {
+        this->current = nullptr;
+        this->index = (pList != nullptr? pList->size() : 0);
+    }
+    /*
+        Constructor of iterator
+        * Set pList to pList
+        * begin = true: 
+        * * Set current (index = 0) to pList's head if pList is not NULL
+        * * Otherwise set to NULL (index = -1)
+        * begin = false: 
+        * * Always set current to NULL
+        * * Set index to pList's size if pList is not NULL, otherwise 0
+    */
+}
+
+template <class T>
+typename SLinkedList<T>::Iterator& SLinkedList<T>::Iterator::operator=(const Iterator& iterator)
+{
+    this->current = iterator.current;
+    this->index = iterator.index;
+    this->pList = iterator.pList;
+    return *this;
+    /*
+        Assignment operator
+        * Set this current, index, pList to iterator corresponding elements.
+    */
+}
+
+template <class T>
+void SLinkedList<T>::Iterator::remove()
+{
+    if (current == nullptr)
+    {
+        throw std::out_of_range("Segmentation fault!");
+    }
+    pList->removeAt(index);
+    index -= 1;
+    if (index == -1)
+    {
+        current = nullptr;
+    }
+    else
+    {
+        int i = 0;
+        Node* x = pList->head;
+        while (x != nullptr)
+        {
+            if (i == index)
+            {
+                break;
+            }
+            i++;
+            x = x->next;
+        }
+        current = x;
+    }
+    /*
+        Remove a node which is pointed by current
+        * After remove current points to the previous node of this position (or node with index - 1)
+        * If remove at front, current points to previous "node" of head (current = NULL, index = -1)
+        * Exception: throw std::out_of_range("Segmentation fault!") if remove when current is NULL
+    */
+}
+
+template <class T>
+void SLinkedList<T>::Iterator::set(const T& e)
+{
+    if (current == nullptr)
+    {
+        throw std::out_of_range("Segmentation fault!");
+    }
+    current->data = e;
+    /*
+        Set the new value for current node
+        * Exception: throw std::out_of_range("Segmentation fault!") if current is NULL
+    */
+}
+
+template <class T>
+T& SLinkedList<T>::Iterator::operator*()
+{
+    if (current == nullptr)
+    {
+        throw std::out_of_range("Segmentation fault!");
+    }
+    return current->data;
+    /*
+        Get data stored in current node
+        * Exception: throw std::out_of_range("Segmentation fault!") if current is NULL
+    */
+}
+
+template <class T>
+bool SLinkedList<T>::Iterator::operator!=(const Iterator& iterator)
+{
+    return (current == iterator.current && index == iterator.index? false : true);
+
+    /*
+        Operator not equals
+        * Returns false if two iterators points the same node and index
+    */
+}
+// Prefix ++ overload
+template <class T>
+typename SLinkedList<T>::Iterator& SLinkedList<T>::Iterator::operator++()
+{
+    if (index == pList->size())
+    {
+        throw std::out_of_range("Segmentation fault!");
+    }
+    index++;
+    if (index == 0)
+    {
+        current = pList->head;
+    }
+    else
+    {
+        current = current->next;
+    }
+    return *this;
+    /*
+        Prefix ++ overload
+        * Set current to the next node
+        * If iterator corresponds to the previous "node" of head, set it to head
+        * Exception: throw std::out_of_range("Segmentation fault!") if iterator corresponds to the end
+    */
+}
+// Postfix ++ overload
+template <class T>
+typename SLinkedList<T>::Iterator SLinkedList<T>::Iterator::operator++(int)
+{
+    if (index == pList->size())
+    {
+        throw std::out_of_range("Segmentation fault!");
+    }
+    Iterator temp = *this;
+    ++*this;
+    return temp;
+    /*
+        Postfix ++ overload
+        * Set current to the next node
+        * If iterator corresponds to the previous "node" of head, set it to head
+        * Exception: throw std::out_of_range("Segmentation fault!") if iterator corresponds to the end
+    */
+}

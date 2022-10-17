@@ -1,40 +1,63 @@
-
 template <class T>
-class DLinkedList {
-public:
-    class Node; // Forward declaration
-protected:
-    Node* head;
-    Node* tail;
-    int count;
-public:
-    DLinkedList();
-    ~DLinkedList();
-    void    add(const T &e);
-    void    add(int index, const T &e);
-    int     size();
-public:
-    class Node
+void DLinkedList<T>::add(const T& e) {
+    if (count == 0)
     {
-    private:
-        T data;
-        Node *next;
-        Node *previous;
-        friend class DLinkedList<T>;
+    Node* newNode = new Node(e);
+    head = newNode;
+    tail = newNode;
+    tail->next = NULL;
+    ++(this->count);
+    return;
+    }
+    Node* newNode = new Node(e);
+    tail->next = newNode;
+    newNode->previous = tail;
+    newNode->next = NULL;
+    tail = newNode;
+    ++(this->count);
+    return;
+}
 
-    public:
-        Node()
+template<class T>
+void DLinkedList<T>::add(int index, const T& e) {
+    /* Insert an element into the list at given index. */
+if (count == 0) {add(e);return;}
+if (index == 0)
+{
+Node* newNode = new Node(e);
+newNode->next = head;
+head->previous = newNode;
+head = newNode;
+++(this->count);
+return;
+}
+    if (index == this->count) {add(e); return;}
+    int idx = 0;
+    Node* front = head;
+    Node* back = NULL;
+    for (;front != NULL; back = front, front = front->next, ++idx)
+    {
+        if (idx == index)
         {
-            this->previous = NULL;
-            this->next = NULL;
+        Node* newNode = new Node (e);
+        ++(this->count);
+        back->next = newNode;
+        newNode->next = front;
+        front->previous = newNode;
+        return;
         }
+    }
+    
+}
 
-        Node(const T &data)
-        {
-            this->data = data;
-            this->previous = NULL;
-            this->next = NULL;
-        }
-    };
-
-};
+template<class T>
+int DLinkedList<T>::size() {
+    /* Return the length (size) of list */ 
+    int cnt=0;
+    Node*temp=head;
+    while(temp!=nullptr){
+        temp=temp->next;
+        cnt++;
+    }
+    return cnt;
+}

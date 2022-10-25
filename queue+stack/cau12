@@ -1,0 +1,29 @@
+string deleteDuplicate(string S, int k) {
+    if(k==0||k==1) return "";
+    stack<pair<char,int>> stac;
+    stac.push({S[0],1});
+    for(unsigned int i=1;i<S.size();i++){
+        pair<char,int> temp=stac.top();
+        //cout<<temp.second<<endl;
+        //cout<<temp.first<<endl;
+        if(temp.first==S[i]){
+            while(temp.first==S[i]&&temp.second==k-1){
+                for(int j=0;j<k-1;j++){
+                    stac.pop();
+                }
+                S.erase(i-k+1,k);
+                i=i-k+1;
+                if(stac.size()==0){
+                    break;
+                }
+                temp=stac.top();
+            }
+            if(temp.first==S[i]) stac.push({S[i],temp.second+1});
+            else stac.push({S[i],1});
+        }
+        else {
+            stac.push({S[i],1});
+        }
+    }
+    return S;
+}

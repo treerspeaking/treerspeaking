@@ -1,0 +1,29 @@
+template <class T>
+void Sorting<T>::oddEvenSort(T *start, T *end)
+{
+    bool issorted=0;
+    while(issorted==0){
+        issorted=1;
+        //cout<<*(start+1)<<endl;
+        for(int i=0;i<=end-start-2;i+=2){
+            //cout<<*(start+i)<<endl;
+            if(*(start+i)>*(start+i+1)){
+                T temp=*(start+i);
+                *(start+i)=*(start+i+1);
+                *(start+i+1)=temp;
+                issorted=0;
+            }
+            
+        }
+        for(int i=1;i<=end-start-2;i+=2){
+            if(*(start+i)>*(start+i+1)){
+                T temp=*(start+i);
+                *(start+i)=*(start+i+1);
+                *(start+i+1)=temp;
+                issorted=0;
+            }
+            
+        }
+        printArray(start,end);
+    }
+}

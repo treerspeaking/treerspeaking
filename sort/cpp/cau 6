@@ -1,0 +1,29 @@
+static T* Partition(T* start, T* end) {
+    // TODO: return the pointer which points to the pivot after rearrange the array.
+    int size = end - start;
+    int left = 0, right = size - 1;
+    int lower = left + 1, upper = right;
+    T pivot = start[left];
+    while (lower <= upper) {
+        while (start[lower] < pivot) lower++;
+        while (start[upper] > pivot) upper--;
+        if (lower < upper) {
+            swap(start[lower], start[upper]);
+            lower++;
+            upper--;
+        }
+        else lower++;
+    }
+    swap(start[upper], start[left]);
+    return &start[upper];
+}
+
+static void QuickSort(T* start, T* end) {
+    // TODO
+    // In this question, you must print out the index of pivot in subarray after everytime calling method Partition.
+    if (end - start <= 0) return;
+    T* pivot_pos = Partition(start, end);
+    cout << pivot_pos - start << " ";
+    QuickSort(start, pivot_pos);
+    QuickSort(pivot_pos + 1, end);
+}

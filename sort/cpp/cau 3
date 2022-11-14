@@ -1,0 +1,43 @@
+static void merge(T* left, T* middle, T* right){
+    /*TODO*/
+    T* nleft=new T [(middle-left)];
+    T* nright=new T [(right-middle)];
+    int i;
+    for(i=0;i<middle-left+1;i++){
+        nleft[i]=left[i];
+    }
+    for(int i=0;i<right-middle;i++){
+        nright[i]=middle[i+1];
+    }
+    int countl,countr;
+    for(countl=0,countr=0;countl<middle-left+1&&countr<right-middle;){
+        if(nleft[countl]>nright[countr]){
+            left[countl+countr]=nright[countr];
+            countr++;
+        }
+        else{
+            left[countl+countr]=nleft[countl];
+            countl++;
+        }
+    }
+    while(countl<middle-left+1){
+        left[countl+countr]=nleft[countl];
+        countl++;
+    }
+    while(countr<right-middle){
+        left[countl+countr]=nright[countr];
+        countr++;
+    }
+    Sorting::printArray(left, right);
+}
+static void mergeSort(T* start, T* end){
+    /*TODO*/
+    if(start>=end){
+        return;
+    }
+    T* mid =start+(end-start)/2;
+     Sorting::mergeSort(start,mid);
+     Sorting::mergeSort((mid+1),end);
+     Sorting::merge(start,mid,end);
+    
+}

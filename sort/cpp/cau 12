@@ -1,0 +1,168 @@
+//Helping functions goes here
+struct ele {
+    int count, index, val;
+};
+ 
+// Used for sorting by value
+bool mycomp(struct ele a, struct ele b)
+{
+    return (a.val < b.val);
+}
+ 
+// Used for sorting by frequency. And if frequency is same,
+// then by appearance
+bool mycomp2(struct ele a, struct ele b)
+{
+    if (a.count != b.count)
+        return (a.count < b.count);
+    else
+        return a.index > b.index;
+}
+bool myfind(struct ele a,struct ele b){
+    if(a.val==b.val) return 1;
+    else return 0;
+}
+int flag(int n, int m,vector<int> A, vector<int> B){
+    //TODO
+    vector<ele> element;
+    for (int i = 0; i < n; i++) {
+        struct ele temp;
+        temp.index=1;
+        temp.count=0;
+        temp.val=A[i];
+        // Fill Indexes
+        //element[i].index = i;
+ 
+        // Initialize counts as 0
+        //element[i].count = 0;
+ 
+        // Fill values in structure
+        // elements
+        //element[i].val = A[i];
+        element.push_back(temp);
+    }
+ 
+    /* Sort the structure elements according to value,
+       we used stable sort so relative order is maintained.
+     */
+    stable_sort(element.begin(), element.end(), mycomp);
+    //for(int i=element.size()-1;i>=0;i--){
+    //    cout<<"val="<<element[i].val<<endl;
+    //    cout<<element[i].count<<endl;
+    //}
+    /* initialize count of first element as 1 */
+    element[0].count = 1;
+ 
+    /* Count occurrences of remaining elements */
+    for (int i = 1; i < n; i++) {
+ 
+        if (element[i].val == element[i - 1].val) {
+            element[i].count += element[i - 1].count + 1;
+ 
+            /* Set count of previous element as -1, we are
+               doing this because we'll again sort on the
+               basis of counts (if counts are equal than on
+               the basis of index)*/
+            element[i - 1].count = -1;
+ 
+            /* Retain the first index (Remember first index
+               is always present in the first duplicate we
+               used stable sort. */
+            element[i].index = element[i - 1].index;
+        }
+ 
+        /* Else If previous element is not equal to current
+          so set the count to 1 */
+        else
+            element[i].count = 1;
+    }
+    stable_sort(element.begin(), element.end(), mycomp2);
+    //for(int i=element.size()-1;i>=0;i--){
+    //    cout<<"val="<<element[i].val<<endl;
+    //    cout<<element[i].count<<endl;
+    //}
+    vector<ele> element1;
+    for (int i = 0; i < m; i++) {
+        struct ele temp;
+        temp.index=1;
+        temp.count=0;
+        temp.val=B[i];
+        // Fill Indexes
+        //element[i].index = i;
+ 
+        // Initialize counts as 0
+        //element[i].count = 0;
+ 
+        // Fill values in structure
+        // elements
+        //element[i].val = A[i];
+        element1.push_back(temp);
+    }
+ 
+    /* Sort the structure elements according to value,
+       we used stable sort so relative order is maintained.
+     */
+    stable_sort(element1.begin(), element1.end(), mycomp);
+ 
+    /* initialize count of first element as 1 */
+    element1[0].count = 1;
+ 
+    /* Count occurrences of remaining elements */
+    for (int i = 1; i < m; i++) {
+ 
+        if (element1[i].val == element1[i - 1].val) {
+            element1[i].count += element1[i - 1].count + 1;
+ 
+            /* Set count of previous element as -1, we are
+               doing this because we'll again sort on the
+               basis of counts (if counts are equal than on
+               the basis of index)*/
+            element1[i - 1].count = -1;
+ 
+            /* Retain the first index (Remember first index
+               is always present in the first duplicate we
+               used stable sort. */
+            element1[i].index = element1[i - 1].index;
+        }
+ 
+        /* Else If previous element is not equal to current
+          so set the count to 1 */
+        else
+            element1[i].count = 1;
+    }
+    stable_sort(element1.begin(), element1.end(), mycomp2);
+    //for(int i=element1.size()-1;i>=0;i--){
+    //    cout<<element1[i].val<<endl;
+    //    cout<<element1[i].count<<endl;
+    //}
+    for(int i=element1.size()-1;i>=0;i--){
+        if(element1[i].count==-1) break;
+        bool alreadyexist=0;
+        int j;
+        for(j=element.size()-1;j>=0;j--){
+            if(element[j].count==-1) break;
+            if(element1[i].val==element[j].val){
+                //cout<<element[j].count<<endl;
+                element[j].count+=element1[i].count;
+                //cout<<element1[i].count<<endl;
+                //cout<<element1[i].val<<endl;
+                //cout<<element[j].count<<endl;
+                alreadyexist=1;
+                break;
+            }
+        }
+        if(alreadyexist==0){
+            element.push_back(element1[i]);
+        }
+    }
+    int cou=0;
+    stable_sort(element.begin(), element.end(), mycomp2);
+    for(int i=element.size()-1;n>0;i--){
+        cou++;
+        //cout<<element[i].val<<endl;
+        //cout<<element[i].count<<endl;
+        //cout<<element[i].val<<endl;
+        n-=element[i].count;
+    }
+    return cou;
+}

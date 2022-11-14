@@ -1,0 +1,13 @@
+int maximumProduct(vector<int>& nums) {
+    sort(nums.begin(),nums.end());
+    int pro=1;
+    for(unsigned int i=nums.size()-1;i>nums.size()-4;i--){
+        pro*=nums[i];
+    }
+    int temp=nums[0]*nums[1]*nums[nums.size()-1];
+    if(pro<temp){
+        pro=temp;
+    }
+    //int temp=
+    return pro;
+}    

@@ -1,0 +1,7 @@
+/* Your helping functions go here */
+bool isPermutation (string a, string b) {
+    //TODO
+    sort(a.begin(),a.end());
+    sort(b.begin(),b.end());
+    return !a.compare(b);
+}

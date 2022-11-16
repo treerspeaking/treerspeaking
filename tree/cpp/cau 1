@@ -1,0 +1,15 @@
+// STUDENT ANSWER BEGIN
+// You can define other functions here to help you.
+void BFS()
+{
+    queue<Node*> q;
+    q.push(root);
+    while(q.size()!=0){
+        Node*temp=q.front();
+        if(temp->pLeft!=nullptr) q.push(temp->pLeft);
+        if(temp->pRight!=nullptr) q.push(temp->pRight);
+        cout<<temp->value<<" ";
+        q.pop();
+    }
+}
+// STUDENT ANSWER END

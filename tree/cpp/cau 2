@@ -1,0 +1,23 @@
+int calsum(BTNode*root){
+    if(root==nullptr) return 0;
+    int s=root->val;
+    s+=calsum(root->left);
+    s+=calsum(root->right);
+    return s;
+}
+int distinctParities(BTNode* root) {
+    if(root==nullptr) return 0;
+    int s=0;
+    if(root->left!=nullptr&&root->right!=nullptr&&
+    ((calsum(root->left)%2!=0&&calsum(root->right)%2==0)||(calsum(root->left)%2==0&&calsum(root->right)%2!=0))){
+        s=1;
+        //cout<<calsum(root->left)<<endl;
+        //cout<<calsum(root->right)<<endl;
+    }
+    //cout<<s<<endl;
+    //cout<<calsum(root->right)<<endl;
+    //cout<<calsum(root->left)<<endl;
+    s+=distinctParities(root->left);
+    s+=distinctParities(root->right);
+    return s;
+}

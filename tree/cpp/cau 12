@@ -1,0 +1,14 @@
+//Helping functions
+int sumrec(Node*root){
+    if(root==nullptr) return 0;
+    if(root->pLeft==nullptr&&root->pRight==nullptr) return root->value;
+    int sum=0;
+    sum+=sumrec(root->pLeft);
+    sum+=sumrec(root->pRight);
+    return sum;
+}
+int sumOfLeafs(){
+    //TODO
+    return sumrec(root);
+    
+}

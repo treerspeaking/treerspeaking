@@ -1,0 +1,17 @@
+bool greatancsearch(int& val,BTNode*root){
+    if(root==nullptr) return 1;
+    if(val<root->val) return 0;
+    bool check=greatancsearch(val,root->left);
+    if(check==0) return 0;
+    check= greatancsearch(val,root->right);
+    return check;
+    
+}
+int greatAncestor(BTNode* root) {
+    if(root==nullptr) return 0;
+    int s=0;
+    s+=greatancsearch(root->val,root);
+    s+=greatAncestor(root->left);
+    s+=greatAncestor(root->right);
+    return s;
+}

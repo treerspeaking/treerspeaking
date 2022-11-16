@@ -1,0 +1,16 @@
+// STUDENT ANSWER BEGIN
+// You can define other functions here to help you.
+int countrec(Node* root){
+    if(root==nullptr) return 0;
+    int sum=0;
+    if(root->pLeft!=nullptr && root->pRight!=nullptr) sum++;
+    sum+=countrec(root->pLeft);
+    sum+=countrec(root->pRight);
+    return sum;
+    
+}
+int countTwoChildrenNode()
+{
+    return countrec(this->root);
+}
+// STUDENT ANSWER END

@@ -1,0 +1,51 @@
+// STUDENT ANSWER BEGIN
+// You can define other functions here to help you.
+int heightrec(Node*root){
+    if(root==nullptr) return 0;
+    int left=heightrec(root->pLeft);
+    int right=heightrec(root->pRight);
+    return max(left,right)+1;
+}
+int getHeight() {
+    // TODO: return height of the binary tree.
+    return heightrec(this->root);
+}
+string prerec(Node*root){
+    if(root==nullptr) return "";
+    string s="";
+    s+=to_string(root->value)+" ";
+    s+=prerec(root->pLeft);
+    s+=prerec(root->pRight);
+    return s;
+}
+string preOrder() {
+    // TODO: return the sequence of values of nodes in pre-order.
+    return prerec(root);
+}
+string inrec(Node*root){
+    if(root==nullptr) return "";
+    string s="";
+    s+=inrec(root->pLeft);
+    s+=to_string(root->value)+" ";
+    s+=inrec(root->pRight);
+    return s;
+}
+string inOrder() {
+    // TODO: return the sequence of values of nodes in in-order.
+    return inrec(root);
+}
+string postrec(Node*root){
+    if(root==nullptr) return "";
+    string s="";
+    s+=postrec(root->pLeft);
+    s+=postrec(root->pRight);
+    s+=to_string(root->value)+" ";
+    return s;
+}
+string postOrder() {
+    // TODO: return the sequence of values of nodes in post-order.
+    return postrec(root);
+    
+}
+
+// STUDENT ANSWER END

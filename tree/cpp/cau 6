@@ -1,0 +1,18 @@
+bool search(BTNode*root,int& a){
+    if(root==nullptr) return 0;
+    if(root->val==a) return 1;
+    bool check= search(root->left,a);
+    if(check==1) return 1;
+    check= search(root->right,a);
+    return check;
+}
+int lowestAncestor(BTNode* root, int a, int b) {
+    if((search(root->left,a)&&search(root->left,b))){
+        return lowestAncestor( root->left, a, b );
+    }
+    else if(search(root->right,a)&&search(root->right,b)){
+        return lowestAncestor( root->right, a, b );
+    }
+    else return root->val;
+
+}

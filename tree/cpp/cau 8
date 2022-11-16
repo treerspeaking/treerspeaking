@@ -1,0 +1,39 @@
+int secondDeepest(BTNode* root) {
+    queue<BTNode*> q;
+    int height=0;
+    int heightfirstdeep=-1;
+    int heightsecondeep=-1;
+    q.push(root);
+    while(q.size()!=0){
+        height++;
+        bool deepalready=0;
+        //cout<<heightfirstdeep<<endl;
+        //cout<<heightsecondeep<<endl;
+        for(int count=q.size();count>0;count--){
+            BTNode*temp=q.front();
+            if(temp->left!=nullptr) {
+                q.push(temp->left);
+                //cout<<"deepal"<<deepalready<<endl;
+                if(!deepalready&&temp->left->left==nullptr&&temp->left->right==nullptr) {
+                    //cout<<"templeft"<<temp->val;
+                    //cout<<"   "<<temp->left->val<<endl;
+                    //cout<<"   "<<temp->left->val<<endl;
+                    heightsecondeep=heightfirstdeep;
+                    heightfirstdeep=height;
+                    deepalready=1;
+                }
+            }
+            if(temp->right!=nullptr){
+                q.push(temp->right);
+                if(!deepalready&&temp->right->left==nullptr&&temp->right->right==nullptr) {
+                    //cout<<"tempright"<<temp->right->val<<endl;
+                    heightsecondeep=heightfirstdeep;
+                    heightfirstdeep=height;
+                    deepalready=1;
+                }
+            }
+            q.pop();
+        }
+    }
+    return heightsecondeep;
+}

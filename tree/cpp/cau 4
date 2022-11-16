@@ -1,0 +1,20 @@
+void smallestandbiggest(BTNode *&root,int small,int big,int&max){
+    if(root==nullptr) return ;
+    if(root->val<=small){
+        small=root->val;
+    }
+    if(root->val>=big){
+        big=root->val;
+    }
+    if(max<big-small) max=big-small;
+    smallestandbiggest(root->left,small,big,max);
+    smallestandbiggest(root->right,small,big,max);
+}
+int largestDiff(BTNode* root) {
+    int s=root->val;
+    int b=root->val;
+    int m=0;
+    smallestandbiggest(root,s,b,m);
+    return m;
+    
+}

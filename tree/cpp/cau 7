@@ -1,0 +1,24 @@
+int max(int a, int b){
+    if(a<b){
+        return b;
+    }
+    else return a;
+}
+int sum(BTNode* root){
+    if(!root) return 0;
+    else return root->val+sum(root->left)+sum(root->right);
+}
+void largestP(int& maxP, BTNode* root, int sumall){
+    if(!root) return;
+    else{
+        maxP=max(max(sum(root->left)*(-sum(root->left)+sumall),sum(root->right)*(sumall-sum(root->right))),maxP);
+        largestP(maxP,root->right,sumall);
+        largestP(maxP,root->left,sumall);
+    }
+}
+int maximizeProduct(BTNode* root) {
+    int maxP=0;
+    int sumall=sum(root);
+    largestP(maxP,root,sumall);
+    return maxP;
+}

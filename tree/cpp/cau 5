@@ -1,0 +1,42 @@
+
+//Hung
+//Hung Hoang
+void sumOfLongRootToLeafPath(BTNode* root, int sum,
+                      int len, int& maxLen, int& maxSum)
+{
+    // if true, then we have traversed a
+    // root to leaf path
+    if (!root) {
+        // update maximum length and maximum sum
+        // according to the given conditions
+        if (maxLen < len) {
+            maxLen = len;
+            maxSum = sum;
+        } else if (maxLen == len && maxSum < sum)
+            maxSum = sum;
+        return;
+    }
+ 
+    // recur for left subtree
+    sumOfLongRootToLeafPath(root->left, sum + root->val,
+                            len + 1, maxLen, maxSum);
+ 
+    // recur for right subtree
+    sumOfLongRootToLeafPath(root->right, sum + root->val,
+                            len + 1, maxLen, maxSum);
+}
+
+int longestPathSum(BTNode* root) {
+    if (!root)
+        return 0;
+ 
+    int maxSum = -999999, maxLen = 0;
+ 
+    // finding the maximum sum 'maxSum' for the
+    // maximum length root to leaf path
+    sumOfLongRootToLeafPath(root, 0, 0, maxLen, maxSum);
+ 
+    // required maximum sum
+    return maxSum;
+
+}

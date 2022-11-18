@@ -1,0 +1,15 @@
+long long sumrec(BTNode* root,long long b){
+    if(root==nullptr) return 0;
+    if(root->left==nullptr&&root->right==nullptr) {
+        //cout<<b*10+root->val<<endl;
+        return (b*10+root->val);
+    }
+    long long left;
+    long long right;
+    left=sumrec(root->left,(b*10+root->val)%27022001);
+    right=sumrec(root->right,(b*10+root->val)%27022001);
+    return (left+right);
+}
+int sumDigitPath(BTNode* root) {
+    return sumrec(root,0)%27022001;
+}

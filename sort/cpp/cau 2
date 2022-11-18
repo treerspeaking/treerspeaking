@@ -1,0 +1,56 @@
+template <class T>
+T *Sorting<T>::Partition(T *start, T *end)
+{
+    T pivot=*start;
+    T*starttemp=start+1;
+    end--;
+    while(end-starttemp>0){
+        while(starttemp<end&&*starttemp<pivot){
+            starttemp++;
+        }
+        while(*end>pivot){
+            //cout<<"end= "<<*end<<endl;
+            end--;
+        }
+        //cout<<end-starttemp<<endl;
+        if(end-starttemp>0){
+            //cout<<*end<<endl;
+            swap(*end,*starttemp);
+            end--;
+            starttemp++;
+        }
+        //else starttemp++;
+    }
+    while(*end>pivot) end--;//get to the last element that is < pivot
+    swap(*start,*end);
+    //cout<<*start<<endl;
+    //cout<<"index="<<start-end<<endl;
+    return end;
+}
+
+template <class T>
+void Sorting<T>::insertionSort(T *start, T *end)
+{
+    cout<<"Insertion sort: ";
+    printArray(start,end);
+    for(int i=1;i<end-start;i++){
+        for(int j=i-1;j>=0;j--){
+            if(start[j]>start[i]){
+                swap(start[j],start[i]);
+            }
+            else break;
+        }
+    }
+}
+
+template <class T>
+void Sorting<T>::hybridQuickSort(T *start, T *end, int min_size)
+{
+    if(start-end>=0) return ;
+    if(end-start<min_size) {insertionSort(start,end);return; };
+    cout<<"Quick sort: ";
+    printArray(start,end);
+    T *pivotpos=Partition(start,end);
+    hybridQuickSort(start,pivotpos,min_size);
+    hybridQuickSort(pivotpos+1,end,min_size);
+}

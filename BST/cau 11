@@ -1,0 +1,27 @@
+BSTNode*subtree(BSTNode*curr,int lo,int hi){
+    //cout<<"ok"<<endl;
+    if(curr==nullptr) return nullptr;
+    curr->left=subtree(curr->left,lo,hi);
+    if(lo<=curr->val&&curr->val<=hi){
+        curr->right=subtree(curr->right,lo,hi);
+        return curr;
+    }
+    else if(curr->val<lo) return subtree(curr->right,lo,hi);
+    else return subtree(curr->left,lo,hi);
+}
+BSTNode* subtreeWithRange(BSTNode* root, int lo, int hi) {
+    if(root==nullptr) return nullptr;
+    // STUDENT ANSWER
+    if(lo>hi) return nullptr;
+    while(root!=nullptr){
+        if(root->val<lo) root=root->right;
+        else break;
+    }
+    while(root!=nullptr){
+        if(root->val>hi) root=root->left;
+        else break;
+    }
+    //if(root->val==1776) cout<<root->val<<endl;
+    subtree(root,lo,hi);
+    return root;
+}

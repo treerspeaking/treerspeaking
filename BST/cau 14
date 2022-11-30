@@ -1,0 +1,33 @@
+// STUDENT ANSWER BEGIN
+// You can define other functions here to help you.
+
+bool find(T i) {
+    // TODO: return true if value i is in the tree; otherwise, return false.
+    Node*temp=root;
+    while(temp!=nullptr){
+        if(i==temp->value){
+            return 1;
+        }
+        else if(i<temp->value){
+            temp=temp->pLeft;
+        }
+        else if(i>temp->value){
+            temp=temp->pRight;
+        }
+    }
+    return 0;
+}
+T sumrec(Node*curr,T l,T r){
+    if(curr==nullptr) return 0;
+    if(l<=curr->value&&curr->value<=r){
+        return curr->value+sumrec(curr->pLeft,l,r)+sumrec(curr->pRight,l,r);
+    }
+    else if(curr->value<l) return sumrec(curr->pRight,l,r);
+    else return sumrec(curr->pLeft,l,r);
+}
+T sum(T l, T r) {
+    // TODO: return the sum of all element in the tree has value in range [l,r].
+    return sumrec(root,l,r);
+}
+
+// STUDENT ANSWER END

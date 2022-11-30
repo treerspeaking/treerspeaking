@@ -1,0 +1,69 @@
+//Helping functions
+void add(T value){
+    //TODO
+    if(root==nullptr) {root=new Node(value);return;}
+    Node*temp=root;
+    while(temp!=nullptr){
+        if(value<=temp->value){
+            if(temp->pLeft!=nullptr){
+                temp=temp->pLeft;
+            }
+            else{
+                temp->pLeft=new Node(value);
+                break;
+            }
+        }
+        else{
+            if(temp->pRight!=nullptr){
+                temp=temp->pRight;
+            }
+            else{
+                temp->pRight=new Node(value);
+                break;
+            }
+        }
+    }
+}
+Node * findmin(Node*root){
+    while(root->pLeft!=nullptr){
+        root=root->pLeft;
+    }
+    return root;
+}
+Node *delrec(Node*root,T value){
+    if(root==nullptr) return nullptr;
+    if(value<root->value) root->pLeft=delrec(root->pLeft,value);
+    else if(root->value<value) root->pRight=delrec(root->pRight,value);
+    else{
+        if(root->pLeft==nullptr&&root->pRight==nullptr){
+            delete root;
+            return nullptr;
+        }
+        else if(root->pLeft==nullptr&&root->pRight!=nullptr){
+            Node*temp=root->pRight;
+            *root=*temp;
+            delete temp;
+            //return root;
+        }
+        else if(root->pLeft!=nullptr&&root->pRight==nullptr){
+            Node*temp=root->pLeft;
+            *root=*temp;
+            delete temp;
+            //return root;
+        }
+        else {
+            Node*temp=findmin(root->pRight);
+            root->value=temp->value;
+            //cout<<temp->value<<endl;
+            root->pRight=delrec(root->pRight,temp->value);
+            //return root;
+        }
+    }
+    return root;
+}
+void deleteNode(T value){
+    //TODO
+    if(root==nullptr) return;
+    root=delrec(root,value);
+    
+}

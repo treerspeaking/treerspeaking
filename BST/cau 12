@@ -1,0 +1,12 @@
+void countrec(BSTNode*curr,int lo,int hi,int &count){
+    if(curr==nullptr) return;
+    countrec(curr->left,lo,hi,count);
+    if(lo<=curr->val&&curr->val<=hi) count++;
+    countrec(curr->right,lo,hi,count);
+}
+int inRange(BSTNode* root, int lo, int hi) {
+    // STUDENT ANSWER
+    int count=0;
+    countrec(root,lo,hi,count);
+    return count;
+}

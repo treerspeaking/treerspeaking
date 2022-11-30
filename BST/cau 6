@@ -1,0 +1,23 @@
+void toinorder(BSTNode*root,vector<BSTNode*> &v){
+    if(root==nullptr) return;
+    toinorder(root->left,v);
+    v.push_back(root);
+    toinorder(root->right,v);
+}
+BSTNode* increasingBST(BSTNode* root) {
+    if(root==nullptr) return nullptr;
+    // STUDENT ANSWER
+    vector<BSTNode*>v;
+    toinorder(root,v);
+    unsigned int start=0;
+    root=v[start];
+    while(true){
+        v[start]->left=nullptr;
+        if(start<v.size()-1)
+        v[start]->right=v[start+1];
+        else break;
+        start++;
+    }
+    //v[start]->left==nullptr;
+    return root;
+}

@@ -1,0 +1,27 @@
+void InOrder(BTNode *root, stack<BTNode *> &s)
+{
+    if (root == NULL)
+        return;
+
+    InOrder(root->left, s);
+    s.push(root);
+    InOrder(root->right, s);
+}
+
+BTNode *enlarge(BTNode *root)
+{
+    stack<BTNode *> s;
+    InOrder(root, s);
+
+    int sum = 0;
+    while (!s.empty())
+    {
+        BTNode *p = s.top();
+        s.pop();
+
+        sum = sum + p->val;
+        p->val = sum;
+    }
+
+    return root;
+}

@@ -1,0 +1,16 @@
+int kthSmallrec(BSTNode*root,int &k){
+    if(root==nullptr) return -1;
+    int temp=kthSmallrec(root->left,k);
+    if(temp!=-1) return temp;
+    k=k-1;
+    if(k==0) return root->val;
+    return kthSmallrec(root->right,k);
+    
+}
+int kthSmallest(BSTNode* root, int k) {
+    // STUDENT ANSWER
+    //int ans=0;
+    return kthSmallrec(root,k);
+    //return ans;
+    
+}

@@ -1,0 +1,16 @@
+void inordermin(BSTNode*root,BSTNode*&prev,int &ans){
+    if(root==nullptr) return ;
+    //cout<<ans<<endl;
+    //cout<<root->val<<endl;
+    inordermin(root->left,prev,ans);
+    if(prev!=nullptr) ans=min(root->val-prev->val,ans);
+    prev=root;
+    inordermin(root->right,prev,ans);
+}
+int minimumAbsolute(BSTNode* root) {
+    // STUDENT ANSWER
+    int ans=INT_MAX;
+    BSTNode*prev=nullptr;
+    inordermin(root,prev,ans);
+    return ans;
+}

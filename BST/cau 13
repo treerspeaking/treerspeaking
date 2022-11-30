@@ -1,0 +1,17 @@
+// STUDENT ANSWER BEGIN
+// You can define other functions here to help you.
+bool rec(Node*curr){
+    if(curr==nullptr) return 1;
+    if(curr->pLeft!=nullptr&&curr->pLeft->value>curr->value)return 0;
+    if(curr->pRight!=nullptr&&curr->pRight->value<curr->value)return 0;
+    if(rec(curr->pLeft)==0){
+        return 0;
+    }
+    else return rec(curr->pRight);
+}
+bool isBST() {
+    // TODO: return true if a tree is a BST; otherwise, return false.
+    return rec(this->root);
+}
+
+// STUDENT ANSWER END

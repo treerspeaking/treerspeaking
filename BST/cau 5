@@ -1,0 +1,19 @@
+void toinorder(BSTNode*root,vector<int> &v){
+    if(root==nullptr) return;
+    toinorder(root->left,v);
+    v.push_back(root->val);
+    toinorder(root->right,v);
+}
+bool findTarget(BSTNode* root, int k) {
+    //if(root==nullptr) return;
+    // STUDENT ANSWER
+    vector<int> v;
+    toinorder(root,v);
+    int start=0,end=v.size()-1;
+    while(start<end){
+        if(v[start]+v[end]==k) return 1;
+        else if(v[start]+v[end]>k) end--;
+        else if(v[start]+ v[end]<k) start++;
+    }
+    return 0;
+}

@@ -1,0 +1,11 @@
+void countrec(BTNode*curr,int lo,int hi,int &count){
+    if(curr==nullptr) return;
+    countrec(curr->left,lo,hi,count);
+    if(lo<=curr->val&&curr->val<=hi) count++;
+    countrec(curr->right,lo,hi,count);
+}
+int rangeCount(BTNode* root, int lo, int hi) {
+    int count=0;
+    countrec(root,lo,hi,count);
+    return count;
+}

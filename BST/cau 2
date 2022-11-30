@@ -1,0 +1,53 @@
+vector<int> levelAlterTraverse(BSTNode* root) {
+    // STUDENT ANSWER
+    bool lefttoright=1;
+    int countlevel=1;
+    queue<BSTNode*>q;
+    vector<int> rec;
+    if(root==nullptr)  return rec;
+    q.push(root);
+    while(q.size()!=0){
+        int count=0;
+        if(lefttoright){
+            for(int i=countlevel;i>0;i--){
+                //cout<<i<<endl;
+                BSTNode*temp=q.front();
+                if(temp->left!=nullptr){
+                q.push(temp->left);
+                count++;
+                    
+                }
+                if(temp->right!=nullptr){
+                q.push(temp->right);
+                    count++;
+                }
+                rec.push_back(temp->val);
+                q.pop();
+            }
+            lefttoright=!lefttoright;
+        }
+        else{
+            stack<int>tempS;
+            for(int i=countlevel;i>0;i--){
+                BSTNode*temp=q.front();
+                if(temp->left!=nullptr){
+                    q.push(temp->left);
+                    count++;
+                }
+                if(temp->right!=nullptr){
+                    q.push(temp->right);
+                    count++;
+                }
+                tempS.push(temp->val);
+                q.pop();
+            }
+            while(tempS.size()!=0){
+                rec.push_back(tempS.top());
+                tempS.pop();
+            }
+            lefttoright=!lefttoright;
+        }
+        countlevel=count;
+    }
+    return rec;
+}

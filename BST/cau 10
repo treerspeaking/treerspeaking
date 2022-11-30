@@ -1,0 +1,12 @@
+void countrec(BSTNode*root,int &count){
+    if(root==nullptr) return;
+    if((root->left==nullptr&&root->right!=nullptr)||(root->left!=nullptr&&root->right==nullptr)) count++;
+    countrec(root->left,count);
+    countrec(root->right,count);
+}
+int singleChild(BSTNode* root) {
+    // STUDENT ANSWER
+    int count=0;
+    countrec(root,count);
+    return count;
+}

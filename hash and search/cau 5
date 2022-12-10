@@ -1,0 +1,26 @@
+bool findPairs(int arr[], int n, pair<int,int>& pair1, pair<int, int>& pair2)
+{
+   // TODO: If there are two pairs satisfy the condition, assign their values to pair1, pair2 and return true. Otherwise, return false.
+   map<int,pair<int,int>> hash;
+   for(int i=0;i<n;i++){
+       for(int j=i+1;j<n;j++){
+       int sum=arr[i]+arr[j];
+       if(arr[i]==arr[j]) continue;
+           if(hash.find(sum)==hash.end()){
+               hash[sum]=make_pair(arr[i],arr[j]);
+           }
+           else {
+               pair1=hash[sum];
+               //cout<<pair1.first<<endl;
+               //cout<<pair1.second<<endl;
+               pair2=make_pair(arr[i],arr[j]);
+               //cout<<pair2.first<<endl;
+               //cout<<pair2.second<<endl;
+               if(pair1.first!=pair2.first&&pair1.first!=pair2.second&&pair1.second!=pair2.first&&pair1.second!=pair2.second)
+               return 1;
+               else continue;
+           }
+       }
+   }
+   return 0;
+}

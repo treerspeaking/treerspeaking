@@ -1,0 +1,53 @@
+#include <vector>
+#include <algorithm>
+bool mycmp(pair<int,int> a,pair<int,int>b){
+    return a.first>b.first;
+}
+bool myothercmp(pair<int,int> a,pair<int,int>b){
+    return a.second>b.second;//
+}
+//bool mycmp2(pair<int,int>a,pair<int,int>)
+int minWaitingTime(int n, int arrvalTime[], int completeTime[]) {
+    // YOUR CODE HERE
+    vector<pair<int,int>>a;
+    for(int i=0;i<n;i++){
+        pair<int,int> temp;
+        temp.first=arrvalTime[i];
+        temp.second=completeTime[i];
+        a.push_back(temp);
+    }
+    int time=0;
+    int waitingtime=0;
+    vector<pair<int,int>> v;
+    make_heap(a.begin(),a.end(),mycmp);
+    while(a.size()!=0){
+        while(a.size()!=0&&time>=a[0].first){
+            v.push_back(a[0]);
+            push_heap(v.begin(), v.end(),myothercmp);
+            pop_heap(a.begin(),a.end(),mycmp);
+            a.pop_back();
+        }
+        if(v.size()==0) {
+            v.push_back(a[0]);
+            push_heap(v.begin(), v.end(),myothercmp);
+            pop_heap(a.begin(),a.end(),mycmp);
+            a.pop_back();
+            time = v[0].first;
+        }
+        if(v.size()!=0){
+            pair<int,int> temp=v[0];
+            pop_heap(v.begin(),v.end(),myothercmp);
+            v.pop_back();
+            waitingtime+=temp.second+time-temp.first;
+            time+=temp.second;
+        }
+    }
+    for(int i=0;v.size()!=0;i++){
+        pair<int,int> temp=v[0];
+        pop_heap(v.begin(),v.end(),myothercmp);
+        v.pop_back();
+        waitingtime+=temp.second+time-temp.first;
+        time+=temp.second;
+    }
+    return waitingtime;
+}

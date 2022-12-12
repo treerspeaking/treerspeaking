@@ -1,0 +1,68 @@
+    Node* rotL(Node* root) {
+        Node* temp = root->pRight;
+        root->pRight = temp->pLeft;
+        temp->pLeft = root;
+        return temp;
+    }
+    Node* rotR(Node* root) {
+        Node* temp = root->pLeft;
+        root->pLeft = temp->pRight;
+        temp->pRight = root;
+        return temp;
+    }
+    int balance(Node* root) {
+        int leftheight = getHeightRec(root->pLeft);
+        int rightheight = getHeightRec(root->pRight);
+        return rightheight - leftheight;
+    }
+    int getmax(Node* root) {
+        while (root->pRight != nullptr) {
+            root = root->pRight;
+        }
+        return root->data;
+    }
+    Node* remove(Node* root, T value) {
+        if (root == nullptr) return nullptr;
+        else if (value < root->data) root->pLeft = remove(root->pLeft, value);
+        else if (root->data < value) root->pRight = remove(root->pRight, value);
+        else {
+
+            if (root->pLeft == nullptr && root->pRight == nullptr) { delete root; return nullptr; }
+            else if (root->pLeft != nullptr && root->pRight != nullptr) {
+                int temp = getmax(root->pLeft);
+                root->data = temp;
+                root->pLeft = remove(root->pLeft, temp);
+            }
+            else {
+                Node* ok = root->pLeft ? root->pLeft : root->pRight;
+                return ok;
+            }
+        };
+        int b_fact = getHeightRec(root->pRight) - getHeightRec(root->pLeft);
+        if (b_fact > 1) {
+            int b_fact2 = getHeightRec(root->pRight->pRight) - getHeightRec(root->pRight->pLeft);
+            if (b_fact2 >= 0) {
+                root = rotL(root);
+            }
+            else {
+                root->pRight = rotR(root->pRight);
+                root = rotL(root);
+            }
+        }
+        else if (b_fact < -1) {
+            int b_fact2 = getHeightRec(root->pLeft->pRight) - getHeightRec(root->pLeft->pLeft);
+            if (b_fact2 <= 0) {
+                root = rotR(root);
+            }
+            else {
+                root->pLeft = rotL(root->pLeft);
+                root = rotR(root);
+            }
+        }
+        return root;
+    }
+    void remove(const T& value) {
+        //TODO
+        root = remove(root, value);
+
+    }

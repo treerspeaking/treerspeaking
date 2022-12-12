@@ -1,0 +1,20 @@
+void inorderrec(Node*cur){
+    if(cur==nullptr) return ;
+    inorderrec(cur->pLeft);
+    cout<<cur->data<<" ";
+    inorderrec(cur->pRight);
+}
+
+void printInorder(){
+    inorderrec(root);
+}
+bool searchrec(Node*cur,const T&value){
+    if(cur==nullptr) return 0;
+    if(value>cur->data) return searchrec(cur->pRight,value);
+    else if(value<cur->data) return searchrec(cur->pLeft,value);
+    else return 1;
+}
+bool search(const T &value){
+        //TODOr
+    return searchrec(root,value);
+}

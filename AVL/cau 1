@@ -1,0 +1,54 @@
+//Helping functions
+Node* rotL(Node*root){
+    Node*temp=root->pRight;
+    root->pRight=temp->pLeft;
+    temp->pLeft=root;
+    return temp;
+}
+Node* rotR(Node*root){
+    Node*temp=root->pLeft;
+    root->pLeft=temp->pRight;
+    temp->pRight=root;
+    return temp;
+}
+int balance(Node*root){
+    int leftheight=getHeightRec(root->pLeft);
+    int rightheight=getHeightRec(root->pRight);
+    return rightheight-leftheight;
+}
+Node* insert(T value,Node*root){
+    if(!root) root=new Node(value);
+    else if(root->data>value) root->pLeft=insert(value,root->pLeft);
+    else root->pRight=insert(value,root->pRight);
+    int b_fact=balance(root);
+    if(b_fact>1){
+        if(root->pRight->data<=value) {//có dấu bằng chỗ so sánh bên trái
+            root=rotL(root);
+           // return root;
+        }
+        else{
+            root->pRight=rotR(root->pRight);
+            root=rotL(root);
+            //return root;
+        }
+        
+    }
+    else if(b_fact<-1){
+        if(root->pLeft->data>value) {
+            root=rotR(root);
+            //return root;
+        }
+        else{
+            root->pLeft=rotL(root->pLeft);
+            root=rotR(root);
+            //return root;
+        }
+    }
+    return root;
+}
+void insert(const T &value){
+    //TODO
+    root=insert(value,root);
+    
+}
+
